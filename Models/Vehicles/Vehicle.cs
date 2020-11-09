@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace StorageMaster.Models.Vehicles
+namespace StorageMaster
 {
     public abstract class Vehicle
     {
@@ -19,15 +20,7 @@ namespace StorageMaster.Models.Vehicles
         public bool IsFull
         {
             get {
-                double sum = 0;
-                foreach (Product p in Trunk)
-                {
-                    sum += p.Weight;
-                }
-                if (sum >= this.Capacity)
-                   return true;
-                else
-                    return false;
+                return trunk.Sum(product => product.Weight) >= this.Capacity;
             }
         }
         public bool IsEmpty {
