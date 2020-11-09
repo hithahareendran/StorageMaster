@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StorageMaster.Models.Vehicles;
+using System;
 
 namespace StorageMaster
 {
@@ -6,10 +7,13 @@ namespace StorageMaster
     {
         static void Main(string[] args)
         {
-            
-            Gpu gp = new Gpu(12);
-            Console.WriteLine(gp.Price);
-            Console.WriteLine(gp.Weight);
+            Van vh = new Van();
+            vh.LoadProduct(new Gpu(100.0));
+            vh.LoadProduct(new Gpu(100.0));
+            vh.LoadProduct(new HardDrive(100.0));
+           // Console.WriteLine(vh.IsEmpty);
+            Console.WriteLine(vh.IsFull);
+           
         }
     }
 }

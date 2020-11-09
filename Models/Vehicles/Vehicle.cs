@@ -1,44 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Xml.Linq;
 
 namespace StorageMaster.Models.Vehicles
 {
     public abstract class Vehicle
     {
-        private int capacity { get; set; }
-        private IReadOnlyCollection<Product> Trunk { get; set; }
-        private bool isFull { get; set; }
-        private bool isEmpty { get; set; }
+        private List<Product> trunk;
 
-
-
-        public bool IsFull
-        {
-            get { return this.isFull; }
-            set
-            {
-                foreach(Product p in Trunk)
-                {
-
-                }
-                this.isFull = true;
+        private int Capacity { get; set; }
+        public IReadOnlyCollection<Product> Trunk {
+            get {
+                return trunk.AsReadOnly();
             }
         }
-        public bool ISEmpty {
-            get { return this.isEmpty }
-            set
-            {
-
+        public bool IsFull
+        {
+            get {
+                double sum = 0;
+                foreach (Product p in Trunk)
+                {
+                    sum += p.Weight;
+                }
+                if (sum >= this.Capacity)
+                   return true;
+                else
+                    return false;
             }
+        }
+        public bool IsEmpty {
+            get {
+                if (this.Trunk.Count == 0)
+                    return true;
+                else
+                    return false;
+            }
+         
         }
 
 
         public Vehicle(int capcity)
         {
-            this.capacity = capcity;
-            this.Trunk = new List<Product>();
-            this.isFull = this.SetIsFull();
+            this.Capacity = capcity;
+            this.trunk = new List<Product>();
+        }
+
+        public void LoadProduct(Product product)
+        {
+            if (this.IsFull)
+                throw new InvalidOperationException("Vehicle is full!");
+            else
+                trunk.Add(product);
+        }
+
+        public Product Unload()
+        {
+            if(this.IsEmpty)
+                throw new InvalidOperationException("No products left in vehicle!");
+            else
+            {
+                Product product = this.trunk[trunk.Count - 1];
+                this.trunk.RemoveAt(trunk.Count - 1);
+                return product;
+            }
         }
 
     }
