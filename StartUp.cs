@@ -13,6 +13,8 @@ namespace StorageMaster
             vh.LoadProduct(new HardDrive(100.0));
            // Console.WriteLine(vh.IsEmpty);
             Console.WriteLine(vh.IsFull);
+            //testing github
+            // test2 (switching IDE again
            
         }
     }
