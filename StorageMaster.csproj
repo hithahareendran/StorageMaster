@@ -6,4 +6,8 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="IO\" />
+    <Folder Include="IO\Contracts\" />
+  </ItemGroup>
 </Project>
