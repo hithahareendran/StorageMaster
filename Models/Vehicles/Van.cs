@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StorageMaster.Models.Vehicles
+namespace StorageMaster
 {
     class Van : Vehicle
     {

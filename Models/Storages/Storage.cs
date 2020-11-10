@@ -8,8 +8,27 @@ namespace StorageMaster
 {
     public abstract class Storage
     {
-        private IEnumerable<Product> products;
+        private List<Product> products;
         private IEnumerable<Vehicle> vehicles;
+   
+        //private class VehicleItrator : IEnumerator<Vehicle>
+        //{
+        //    private readonly List<Vehicle> vehicles;
+        //    private int currentIndex;
+
+        //    public VehicleItrator(IEnumerable<Vehicle> vehicles)
+        //    {
+        //        this.Reset();
+        //        this.vehicles = new List<Vehicle>(vehicles);
+        //    }
+
+        //    public void Dispose() { }
+        //    public bool MoveNext() => ++this.currentIndex < this.vehicles.Count;
+        //    public void Reset() => this.currentIndex = -1;
+        //    public Vehicle Current => this.vehicles[this.currentIndex];
+        //    object IEnumerator.Current => this.Current;
+
+        //}
 
         public string Name { get; set; }
         public int Capacity { get; set; }
@@ -25,6 +44,10 @@ namespace StorageMaster
             get
             {
                 return vehicles.ToList();
+            }
+            set
+            {
+                this.vehicles = value.ToList(); ;
             }
         }
         public IReadOnlyCollection<Product> Products 
@@ -56,15 +79,47 @@ namespace StorageMaster
 
         public int SendVehicleTo(int garageSlot, Storage deliveryLocation)
         {
-           Vehicle vehicle = this.GetVehicle(garageSlot);
-            if(deliveryLocation.Garage.Last() == null)
+           Vehicle vehicle = this.GetVehicle(garageSlot-1);
+            if (deliveryLocation.Garage.Contains(null) )
             {
-               
+                var ourGarage = this.Garage.ToList();
+                ourGarage[garageSlot - 1] = null;
+                this.Garage = ourGarage;
+
+                var deliveryLocationGarage = deliveryLocation.Garage.ToList();
+                int firstFreeGarageSlot = deliveryLocationGarage
+                .Where(v => v == null)
+                .Select((v, index) => index)
+                .First();
+                deliveryLocationGarage[firstFreeGarageSlot] = vehicle;
+                deliveryLocation.Garage = deliveryLocationGarage;
+
+                return firstFreeGarageSlot;
             }
             else
             {
                 throw new InvalidOperationException("No room in garage!");
             }
         }
+
+        public int UnloadVehicle(int garageSlot)
+        {
+            if (IsFull)
+                throw new InvalidOperationException("Storage is full!");
+
+            Vehicle vehicle = this.GetVehicle(garageSlot - 1);
+            int numberOfUnloadedProducts = 0;
+            while(this.IsFull || vehicle.IsEmpty)
+            {
+               Product product = vehicle.Unload();
+                products.Add(product);
+                numberOfUnloadedProducts++;
+            }
+
+            return numberOfUnloadedProducts;
+
+        }
+
+
     }
 }
