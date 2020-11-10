@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace WarehouseManagement.Core
 {
-    class StorageMaster :IStorageMaster
+    class StorageMaster
     {
         private IProductFactory productFactory;
         private IProductRepository productRepository;
@@ -24,6 +24,43 @@ namespace WarehouseManagement.Core
         }
 
 
+        public string AddProduct(string type, double price)
+        {
+            var product = this.productFactory.CreateProduct(type, price);
+
+            this.productRepository.Add(product);
+
+            return $"Added {type} to pool";
+        }
+
+        public string RegisterStorage(string type, string name)
+        {
+            var store = this.storageFactory.CreateStorage(type, name);
+
+            this.storageRepository.Add(store);
+
+            return $"Registered {name}";
+        }
+
+        public string SelectVehicle(string storageName, int garageSlot)
+        {
+            this.currentVehicle = this.storageRepository.Storages.First
+                (s => s.Name == storageName).GetVehicle(garageSlot);
+            return $"Selected {currentVehicle.GetType()}";
+        }
+
+        public string LoadVehicle(IEnumerable<string> productNames)
+        {
+            var LoadProductsCount = 0;
+
+            foreach (var item in productNames)
+            {
+                if (!this.productRepository.Products.Any(p => p.GetType().Name == item))
+                {
+                    throw new InvalidOperationException($"{item} is OutOfMemoryException of stock!");
+                }
+            } 
+        }
     }
 
 }
