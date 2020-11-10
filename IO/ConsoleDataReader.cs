@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+
 
 namespace StorageMaster.IO
 {
@@ -10,8 +10,8 @@ namespace StorageMaster.IO
         public ConsoleDataReader()
         {
             var inputArray = Console.ReadLine().Split();
-            var usercommand = inputArray[0];
-            //var parameters = inputArray[
+            var userCommand = inputArray[0];
+            var userParameters = inputArray[1..];
 
 
             // 1.get the command name and parameters from user
