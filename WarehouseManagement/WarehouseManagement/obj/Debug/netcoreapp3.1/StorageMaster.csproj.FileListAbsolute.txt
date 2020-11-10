@@ -1,0 +1,4 @@
+C:\Users\Qubes\source\repos\WarehouseManagement\WarehouseManagement\obj\Debug\netcoreapp3.1\StorageMaster.csprojAssemblyReference.cache
+C:\Users\Qubes\source\repos\WarehouseManagement\WarehouseManagement\obj\Debug\netcoreapp3.1\StorageMaster.AssemblyInfoInputs.cache
+C:\Users\Qubes\source\repos\WarehouseManagement\WarehouseManagement\obj\Debug\netcoreapp3.1\StorageMaster.AssemblyInfo.cs
+C:\Users\Qubes\source\repos\WarehouseManagement\WarehouseManagement\obj\Debug\netcoreapp3.1\StorageMaster.csproj.CoreCompileInputs.cache
