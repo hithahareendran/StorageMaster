@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WarehouseManagement.Core
+namespace StorageMaster
 {
     public class StorageMaster
 
@@ -89,40 +89,87 @@ namespace WarehouseManagement.Core
 
         public string UnloadVehicle(string StorageName, int GarageSlot)
         {
-            int unloadedProductsCount = storageRegistry.First(s => s.Name == StorageName).UnloadVehicle(GarageSlot);
-
+            // count need to be calculated before unloading
             var productsInVehicle = this.currentVehicle.Trunk.Count;
-            //var unloadedProductsCount = productsInVehicle - Vehicle.Trunk.Count;
+            int unloadedProductsCount = storageRegistry.First(s => s.Name == StorageName)
+                .UnloadVehicle(GarageSlot);
+
             return $"Unloaded {unloadedProductsCount}/{productsInVehicle} products at {StorageName}";
         }
 
-        //------------IN PROGRESS----not working now
-       /* public string GetStorageStatus(string StorageName)  
+
+        public string GetStorageStatus(string StorageName)
         {
+            //1. get storage
+            Storage storage = this.storageRegistry.First(s => s.Name == StorageName);
+
+            //2. products-> group by name, and count
+            //   sort by count descending
+            //   then by name ascending  ( eg result :  HardDrive (2)  )
+            var stockInfo = storage.Products
+                .GroupBy(p => p.GetType().Name) /* returns key -> name,  and Count() */
+                .OrderByDescending(g => g.Count())
+                .ThenBy(g => g.Key)
+                .Select(g => String.Format("{0} ({1})", g.Key, g.Count()));
+
+
+            //3. get name of all vehicle with 'empty'
+            List<String> vehicleNames = new List<String>();
+            foreach(var vehicle in storage.Garage)
+            {
+                if (vehicle == null)
+                    vehicleNames.Add("empty");
+                else
+                    vehicleNames.Add(vehicle.GetType().Name); 
+            }
+
+            //4. Result -> "Stock ({0}/{1}): [{2}]” ,  0->sum of products weight, 1->capacity, 2->(step 2 stock)
+            // eg: - Stock (2.7/10): [HardDrive (2), Gpu (1)]
+            var result1 = String.Format("Stock ({0}/{1}): [{2}]", storage.Products.Sum(p=>p.Weight) 
+                ,storage.Capacity, String.Join(", ", stockInfo));
+
+            //5. Result-> “Garage: [{0}]”, eg-> (from step3) Garage: [Semi|Semi|Semi|Van|empty|empty|empty|empty|empty|empty]
+            var result2 = String.Format("Garage: [{0}]", String.Join("|", vehicleNames));
+
+            return result1 + Environment.NewLine + result2;
+
+            /*
             Storage sourceStorage = storageRegistry.First(s => s.Name == StorageName);
             var pList = new List<Product>();
             var ReadOnlyPList = sourceStorage.Products;
 
-            foreach ( var p in sourceStorage.Products)
+            foreach (var p in sourceStorage.Products)
             {
                 Console.WriteLine(p.GetType().Name);
 
             }
-            
+
             sourceStorage.Products.GroupBy(p => p.GetType().Name);
 
-            int productCount = sourceStorage.Products.Count;
-            */
-        
-
-        //         pList.OrderBy(p => p.FirstName)
-        //    ThenBy(p => p.Age)
-        //    ToList()
-        //    ForEach(p => Console.WriteLine(p.ToString()));
+            int productCount = sourceStorage.Products.Count; */
 
 
         }
 
+        public string GetSummary()
+        {
+            // 1. get sum of the product price in desc =totalmoney
+            // 2. for each storage produce {storageName}:+ Environment.Newline + Storage worth: ${ totalMoney: F2}
+           
+            var results = storageRegistry
+                .OrderBy(s => s.Products.Sum(p => p.Price))
+                .Select(s => {
+                    var totalMoney = s.Products.Sum(p => p.Price);
+                    var result = $"{s.Name }:" + Environment.NewLine + 
+                    string.Format("Storage worth: ${0:F2}",totalMoney);
+                    return result;
+                });
+
+            // 3. join each result by new lines
+            return string.Join(Environment.NewLine, results);
+        }
+
+    }
 
 
 

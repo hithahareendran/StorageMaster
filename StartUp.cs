@@ -1,5 +1,6 @@
 ﻿//using StorageMaster.Models.Vehicles;
 using System;
+using System.Collections.Generic;
 
 namespace StorageMaster
 {
@@ -11,19 +12,16 @@ namespace StorageMaster
 
             try
             {
-                DistributionCenter s = new DistributionCenter("name");
-                Console.WriteLine(s.GetVehicle(3));
-                
-                Van vh = new Van();
-                var hd3 = new HardDrive(400.0);
-                var hd1 = new HardDrive(200.0);
-                var hd2 = new HardDrive(100.0);
-                vh.LoadProduct(hd1);
-                vh.LoadProduct(hd2);
-                Console.WriteLine(s.Name);
-                Console.WriteLine(vh.IsFull);
-               
-                vh.LoadProduct(hd3);
+
+                var controller = new StorageMaster();
+                Console.WriteLine(controller.RegisterStorage("Warehouse", "testStorage"));
+                Console.WriteLine(controller.SelectVehicle("testStorage", 0));
+                Console.WriteLine(controller.AddProduct("Gpu", 100));
+                Console.WriteLine(controller.AddProduct("Ram", 100));
+                Console.WriteLine(controller.LoadVehicle(new List<String>() { "Gpu","Ram"}));
+                Console.WriteLine(controller.UnloadVehicle("testStorage", 0));
+                Console.WriteLine(controller.GetStorageStatus("testStorage"));
+                Console.WriteLine(controller.GetSummary());
 
 
 
