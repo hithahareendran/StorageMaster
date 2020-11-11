@@ -52,7 +52,7 @@ namespace StorageMaster
         {
             if (garageSlot >= this.GarageSlots)
                 throw new InvalidOperationException("Invalid garage slot!");
-            else if (this.GarageSlots == 0)
+            else if (vehicles.ElementAt(garageSlot) == null)
                 throw new InvalidOperationException("No vehicle in this garage slot!");
             else
                 return vehicles.ElementAt(garageSlot);

@@ -11,6 +11,7 @@ namespace WarehouseManagement.Core
         private List<Product> productPool;
         private List<Storage> storageRegistry;
         private Vehicle currentVehicle;
+     
 
         public StorageMaster()
         {

@@ -9,9 +9,14 @@ namespace StorageMaster
 {
     public abstract class Vehicle
     {
+        public int Capacity { get; private set; }
         private List<Product> trunk;
 
-        private int Capacity { get; set; }
+        public Vehicle(int capacity)
+        {
+            this.Capacity = capacity;
+            this.trunk = new List<Product>();
+        }
         public IReadOnlyCollection<Product> Trunk {
             get {
                 return trunk.AsReadOnly();
@@ -32,14 +37,7 @@ namespace StorageMaster
             }
          
         }
-
-
-        public Vehicle(int capcity)
-        {
-            this.Capacity = capcity;
-            this.trunk = new List<Product>();
-        }
-
+       
         public void LoadProduct(Product product)
         {
             if (this.IsFull)

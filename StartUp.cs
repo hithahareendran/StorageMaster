@@ -1,4 +1,4 @@
-﻿using StorageMaster.Models.Vehicles;
+﻿//using StorageMaster.Models.Vehicles;
 using System;
 
 namespace StorageMaster
@@ -7,14 +7,32 @@ namespace StorageMaster
     {
         static void Main(string[] args)
         {
-            Van vh = new Van();
-            vh.LoadProduct(new Gpu(100.0));
-            vh.LoadProduct(new Gpu(100.0));
-            vh.LoadProduct(new HardDrive(100.0));
-           // Console.WriteLine(vh.IsEmpty);
-            Console.WriteLine(vh.IsFull);
-            
            
+
+            try
+            {
+                DistributionCenter s = new DistributionCenter("name");
+                Console.WriteLine(s.GetVehicle(3));
+                Van vh = new Van();
+                var hd3 = new HardDrive(400.0);
+                var hd1 = new HardDrive(200.0);
+                var hd2 = new HardDrive(100.0);
+                vh.LoadProduct(hd1);
+                vh.LoadProduct(hd2);
+                Console.WriteLine(s.Name);
+                Console.WriteLine(vh.IsFull);
+               
+                vh.LoadProduct(hd3);
+
+
+
+            }
+            catch (Exception e)
+            {
+                
+                Console.WriteLine(e.Message);
+            }
+            
         }
     }
 }
