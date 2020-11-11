@@ -10,14 +10,14 @@ namespace StorageMaster.IO
         public ConsoleDataReader()
         {
             var inputArray = Console.ReadLine().Split();
-            var usercommand = inputArray[0];
-            //var parameters = inputArray[
+            var userCommand = inputArray[0];
+            var userparameters = inputArray[1..];
 
 
             // 1.get the command name and parameters from user
             // 2. validate the input
             // 3. based on userinput (use switch statements..), call the right method from Storagemaster
-            
+            // test for creating branch
 
         }
     }
