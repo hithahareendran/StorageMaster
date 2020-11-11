@@ -87,8 +87,19 @@ namespace WarehouseManagement.Core
 
         }
 
-        
+        public string UnloadVehicle(string StorageName, int GarageSlot)
+        {
+            int unloadedProductsCount = storageRegistry.First(s => s.Name == StorageName).UnloadVehicle(GarageSlot);
+            
+            var productsInVehicle = this.currentVehicle.Trunk.Count;
+            //var unloadedProductsCount = productsInVehicle - Vehicle.Trunk.Count;
+            return $"Unloaded {unloadedProductsCount}/{productsInVehicle} products at {StorageName}";
+        }
 
+        
+        public string GetStorageStatus(string StorageName)  {
+            
+        }
 
 
 

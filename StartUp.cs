@@ -13,6 +13,7 @@ namespace StorageMaster
             {
                 DistributionCenter s = new DistributionCenter("name");
                 Console.WriteLine(s.GetVehicle(3));
+                
                 Van vh = new Van();
                 var hd3 = new HardDrive(400.0);
                 var hd1 = new HardDrive(200.0);
