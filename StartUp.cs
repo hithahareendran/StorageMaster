@@ -27,12 +27,20 @@ namespace StorageMaster
 
 
 
+
             }
             catch (Exception e)
             {
                 
                 Console.WriteLine(e.Message);
             }
+            
+            // // --------below creates error. Planned fix:
+            // // we need to register a storage first before. = TODO
+            //--------------------------------
+            // Console.WriteLine( "testiiing" );
+            // var controller = new WarehouseManagement.Core.StorageMaster();
+            // controller.GetStorageStatus("Awesome storage");
             
         }
     }

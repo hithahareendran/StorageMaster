@@ -11,7 +11,7 @@ namespace WarehouseManagement.Core
         private List<Product> productPool;
         private List<Storage> storageRegistry;
         private Vehicle currentVehicle;
-     
+
 
         public StorageMaster()
         {
@@ -90,20 +90,42 @@ namespace WarehouseManagement.Core
         public string UnloadVehicle(string StorageName, int GarageSlot)
         {
             int unloadedProductsCount = storageRegistry.First(s => s.Name == StorageName).UnloadVehicle(GarageSlot);
-            
+
             var productsInVehicle = this.currentVehicle.Trunk.Count;
             //var unloadedProductsCount = productsInVehicle - Vehicle.Trunk.Count;
             return $"Unloaded {unloadedProductsCount}/{productsInVehicle} products at {StorageName}";
         }
 
-        
-        public string GetStorageStatus(string StorageName)  {
+        //------------IN PROGRESS----not working now
+       /* public string GetStorageStatus(string StorageName)  
+        {
+            Storage sourceStorage = storageRegistry.First(s => s.Name == StorageName);
+            var pList = new List<Product>();
+            var ReadOnlyPList = sourceStorage.Products;
+
+            foreach ( var p in sourceStorage.Products)
+            {
+                Console.WriteLine(p.GetType().Name);
+
+            }
             
+            sourceStorage.Products.GroupBy(p => p.GetType().Name);
+
+            int productCount = sourceStorage.Products.Count;
+            */
+        
+
+        //         pList.OrderBy(p => p.FirstName)
+        //    ThenBy(p => p.Age)
+        //    ToList()
+        //    ForEach(p => Console.WriteLine(p.ToString()));
+
+
         }
 
 
 
 
-    }
-
 }
+
+
