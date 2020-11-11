@@ -64,8 +64,32 @@ namespace WarehouseManagement.Core
 
         public StorageMaster()
         {
-
+            
         }
+
+        public string AddProduct(string type, double price)
+        {
+            
+
+            return $"Added {type} to pool";
+        }
+
+        public string RegisterStorage(string type, string name)
+        {
+           
+
+            return $"Registered {name}";
+        }
+
+        public string SelectVehicle(string storageName, int garageSlot)
+        {
+            
+            return "Selected the current vehicle";
+        }
+
+       
+           
+        
 
     }
 
