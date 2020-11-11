@@ -86,55 +86,7 @@ namespace WarehouseManagement.Core
 
         }
 
-        public string UnloadVehicle(string storageName, int garageSlot)
-        {
-            Storage storage = storageRegistry.First(s => s.Name == storageName);
-            int productsInVehicle = storage.GetVehicle(garageSlot).Trunk.Count;
-            int unloadedProductsCount = storage.UnloadVehicle(garageSlot);
-            return $"Unloaded {unloadedProductsCount}/{productsInVehicle} products at {storageName}";
-        }
-
-        public string GetStorageStatus(string storageName)
-        {
-            Storage storage = storageRegistry.First(s => s.Name == storageName);
-            IEnumerable<String> stockInfo = storage.Products.GroupBy(p => p.GetType().Name)
-                .Select(group => new
-                {
-                    Name = group.Key,
-                    Count = group.Count()
-                })
-                .OrderByDescending(group => group.Count)
-                .ThenBy(group => group.Name)
-                .Select(group => String.Format("{0}({1})", group.Name, group.Count));
-
-            double weightSum = storage.Products.Sum(p => p.Weight);
-            int storageCapacity = storage.Capacity;
-
-            List<String> vehicleName = new List<string>();
-            for (int i = 0; i < storageCapacity; i++)
-            {
-                Vehicle vehicle = storage.GetVehicle(i);
-                if (vehicle == null)
-                    vehicleName.Add("empty");
-                else
-                    vehicleName.Add(vehicle.GetType().Name);
-
-            }
-
-            return $"Stock ({weightSum}/{storageCapacity}): [{String.Join(",", stockInfo)}]" +
-                    Environment.NewLine +
-                    $"Garage: [{String.Join("| ", vehicleName)}]";
-        }
-
-        public string GetSummary()
-        {
-            IEnumerable<String> priceInfo = storageRegistry
-                .OrderByDescending(storage => storage.Products.Sum(p => p.Price))
-                .Select(s => $"{s.Name}:" + Environment.NewLine + $"Storage worth: ${s.Products.Sum(p => p.Price):F2}");
-
-            return String.Join(Environment.NewLine, priceInfo);
-
-        }
+        
 
 
 
