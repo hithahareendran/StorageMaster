@@ -157,7 +157,7 @@ namespace StorageMaster
             // 2. for each storage produce {storageName}:+ Environment.Newline + Storage worth: ${ totalMoney: F2}
            
             var results = storageRegistry
-                .OrderBy(s => s.Products.Sum(p => p.Price))
+                .OrderByDescending(s => s.Products.Sum(p => p.Price))
                 .Select(s => {
                     var totalMoney = s.Products.Sum(p => p.Price);
                     var result = $"{s.Name }:" + Environment.NewLine + 
