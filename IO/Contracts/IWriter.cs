@@ -3,5 +3,6 @@ namespace StorageMaster.IO.Contracts
 {
     public interface IWriter
     {
+        void Write(string args);
     }
 }
