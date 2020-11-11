@@ -10,15 +10,15 @@ namespace StorageMaster
         private double weight { get; set; }
         public Product(double price,double weight)
         {
-            this.price = price;
-            this.weight = weight;
+            this.Price = price;
+            this.Weight = weight;
         }
         public double Price
         {
             get { return this.price; }
             set
             {
-                if(price<0)
+                if(value<0)
                 {
                     throw  new InvalidOperationException("Price cannot be negative");
                 }
