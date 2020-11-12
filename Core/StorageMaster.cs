@@ -20,6 +20,7 @@ namespace StorageMaster
             currentVehicle = null;
         }
 
+        // Create a new product and add to pool
         public string AddProduct(string type, double price)
         {
             var product = ProductFactory.CreateProduct(type, price);
@@ -28,6 +29,7 @@ namespace StorageMaster
             return $"Added {type} to pool";
         }
 
+        // Create a storage and add to storageregistry
         public string RegisterStorage(string type, string name)
         {
             var store = StorageFactory.CreateStorage(type, name);
@@ -36,6 +38,7 @@ namespace StorageMaster
             return $"Registered {name}";
         }
 
+        // Select the current vehicle in the storage garageslot
         public string SelectVehicle(string storageName, int garageSlot)
         {
             this.currentVehicle = storageRegistry.First(s => s.Name == storageName)
@@ -43,20 +46,24 @@ namespace StorageMaster
 
             return $"Selected {currentVehicle.GetType().Name}";
         }
-
+       
+        
         public string LoadVehicle(IEnumerable<string> productNames)
         {
             var loadedProductsCount = 0;
 
             foreach (var name in productNames)
             {
+                // check if prouct is available
                 if (!productPool.Any(p => p.GetType().Name == name))
                 {
                     throw new InvalidOperationException($"{name} is out of stock!");
                 }
                 else
                 {
+                    // Exit when vehicle is full
                     if (currentVehicle == null || currentVehicle.IsFull) break;
+                    // Find last product and remove from pool then load to vehicle
                     Product product = productPool.FindLast(p => p.GetType().Name == name);
                     productPool.Remove(product);
                     currentVehicle.LoadProduct(product);
@@ -68,16 +75,19 @@ namespace StorageMaster
 
         public string SendVehicleTo(string sourceName, int sourceGarageSlot, string destinationName)
         {
+            // check if sourcestorage exists
             if (!storageRegistry.Any(s => s.Name == sourceName))
             {
                 throw new InvalidOperationException($"Invalid source storage!");
             }
+            // Check if destination storage exists
             else if (!storageRegistry.Any(s => s.Name == destinationName))
             {
                 throw new InvalidOperationException($"Invalid destination storage!");
             }
             else
             {
+             // Send vehicle to the destination storage
                 Storage sourceStorage = storageRegistry.First(s => s.Name == sourceName);
                 Vehicle vehicle = sourceStorage.GetVehicle(sourceGarageSlot);
                 Storage deliveryLocation = storageRegistry.First(s => s.Name == destinationName);
@@ -87,6 +97,7 @@ namespace StorageMaster
 
         }
 
+        // Get the vehicle in the storage garageslot
         public string UnloadVehicle(string StorageName, int GarageSlot)
         {
             // count need to be calculated before unloading
@@ -132,22 +143,6 @@ namespace StorageMaster
             var result2 = String.Format("Garage: [{0}]", String.Join("|", vehicleNames));
 
             return result1 + Environment.NewLine + result2;
-
-            /*
-            Storage sourceStorage = storageRegistry.First(s => s.Name == StorageName);
-            var pList = new List<Product>();
-            var ReadOnlyPList = sourceStorage.Products;
-
-            foreach (var p in sourceStorage.Products)
-            {
-                Console.WriteLine(p.GetType().Name);
-
-            }
-
-            sourceStorage.Products.GroupBy(p => p.GetType().Name);
-
-            int productCount = sourceStorage.Products.Count; */
-
 
         }
 

@@ -50,8 +50,11 @@ namespace StorageMaster
 
         public Vehicle GetVehicle(int garageSlot)
         {
+            // Check if garageslot exists
             if (garageSlot >= this.GarageSlots)
                 throw new InvalidOperationException("Invalid garage slot!");
+
+            // Check if garageslot is empty
             else if (vehicles.ElementAt(garageSlot) == null)
                 throw new InvalidOperationException("No vehicle in this garage slot!");
             else
