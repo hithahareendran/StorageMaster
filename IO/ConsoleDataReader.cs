@@ -1,30 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-
-
 
 namespace StorageMaster
 {
-    // Class that reads the commands
-    //Will implement interface IReader
+
     public class ConsoleDataReader
+
     {
         public ConsoleDataReader()
         {
-
-            // 1.Get the command name and parameters from user
-            // 2. Call writer class to present the results 
-            
-            List<String> commands = new List<String>();
-            var input = "";
-
+            string input = "";
+            ConsoleDataWriter writer = new ConsoleDataWriter();
             do
             {
                 input = Console.ReadLine();
-                commands.Add(input);
+                writer.WriteData(input);
             } while (input != "END");
-
-            new ConsoleDataWriter(commands);
 
         }
     }
