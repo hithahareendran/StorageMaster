@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StorageMaster
 {
-    class ProductFactory
+    public static class ProductFactory
     {
         public static Product CreateProduct(String type, double price)
         {

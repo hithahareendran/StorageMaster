@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StorageMaster
 {
-    class StorageFactory
+    public static class StorageFactory
     {
         public static Storage CreateStorage(String type, String name)
         {

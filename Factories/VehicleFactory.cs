@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StorageMaster
 {
-    class VehicleFactory
+    public static class VehicleFactory
     {
         public static Vehicle CreateVehicle(String type)
         {
