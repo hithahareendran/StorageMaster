@@ -11,7 +11,9 @@ namespace StorageMaster
         
         static void Main(string[] args)
         {
+            Console.WriteLine("Please enter your commands");
             new ConsoleDataReader();
+            
             
         }
     }
