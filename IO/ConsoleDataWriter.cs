@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StorageMaster.IO
+namespace StorageMaster
 {
     // 1. validate the input
     // 2. based on userinput (use switch statements..), call the right method from Storagemaster

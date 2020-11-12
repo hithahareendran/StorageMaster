@@ -1,5 +1,5 @@
 ﻿using System;
-namespace StorageMaster.IO.Contracts
+namespace StorageMaster
 {
     public interface IReader
     {

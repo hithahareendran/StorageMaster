@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace StorageMaster.IO
+namespace StorageMaster
 {
     // Class that reads the commands
     //Will implement interface IReader
