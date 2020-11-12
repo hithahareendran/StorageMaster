@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace StorageMaster
 {
     public static class StorageFactory
