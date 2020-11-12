@@ -7,26 +7,65 @@ namespace StorageMaster
 {
     class StartUp
     {
-        static void Main(string[] args)
+        enum Commands
         {
+            AddProduct,
+            RegisterStorage,
+            SelectVehicle
+        }
+
+        static void tempSwitch()
+        {
+
             var storageMaster = new StorageMaster();
 
-            /*try
-            {
-                Console.WriteLine(storageMaster.RegisterStorage("Warehouse", "testStorage"));
-                Console.WriteLine(storageMaster.SelectVehicle("testStorage", 0));
-                Console.WriteLine(storageMaster.AddProduct("Gpu", 100));
-                Console.WriteLine(storageMaster.AddProduct("Ram", 100));
-                Console.WriteLine(storageMaster.LoadVehicle(new List<String>() { "Gpu","Ram"}));
-                Console.WriteLine(storageMaster.UnloadVehicle("testStorage", 0));
-                Console.WriteLine(storageMaster.GetStorageStatus("testStorage"));
-                Console.WriteLine(storageMaster.GetSummary());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }*/
+            // 1.get the command name and parameters from user
+            var inputArray = Console.ReadLine().Split();
+            var userCommand = inputArray[0];
+            var userParameters = inputArray[1..]; //all items exept the first
 
+            Console.WriteLine(userParameters[0]);
+            Console.WriteLine(userParameters[1]);
+
+            // 2. validate the input: checking if the userinput matches available methods
+            // 3. based on userinput call the right method from Storagemaster
+            // Status! storagemasterobject.(methodname) is not firing in the switch.
+            // ---works if methods are static in storagemasterclass and just call directly.
+            if (Enum.TryParse<Commands>(userCommand, out var cmd))
+            {
+                switch (cmd)
+                {
+                    case Commands.AddProduct:
+                        storageMaster.AddProduct(userParameters[0], double.Parse(userParameters[1]));
+                        break;
+
+                    case Commands.RegisterStorage:
+                        storageMaster.RegisterStorage(userParameters[0], userParameters[1]);
+                        break;
+
+                    case Commands.SelectVehicle:
+
+                        storageMaster.SelectVehicle(userParameters[0], int.Parse(userParameters[1]));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unknown command");
+
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            tempSwitch();
+
+            var storageMaster = new StorageMaster();
+
+           
 
             //read commands
             List<String> commands = new List<String>();
