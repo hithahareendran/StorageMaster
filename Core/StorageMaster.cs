@@ -125,13 +125,20 @@ namespace StorageMaster
 
             //3. get name of all vehicle with 'empty'
             List<String> vehicleNames = new List<String>();
-            foreach(var vehicle in storage.Garage)
+            foreach (var vehicle in storage.Garage)
             {
                 if (vehicle == null)
                     vehicleNames.Add("empty");
                 else
-                    vehicleNames.Add(vehicle.GetType().Name); 
+                    vehicleNames.Add(vehicle.GetType().Name);
             }
+
+
+            /*var vehicleNames = storage.Garage.Select(v =>
+            {
+                if (v == null) return "empty";
+                else return v.GetType().Name;
+            });*/
 
             //4. Result -> "Stock ({0}/{1}): [{2}]” ,  0->sum of products weight, 1->capacity, 2->(step 2 stock)
             // eg: - Stock (2.7/10): [HardDrive (2), Gpu (1)]
