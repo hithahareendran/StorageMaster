@@ -91,6 +91,6 @@ END
 ----------------
 Current maintainers:
 
- * Annette 
- * Hitha
+ * Anette Kniberg
+ * Hitha Hareendran
  * Sobhi Malak
