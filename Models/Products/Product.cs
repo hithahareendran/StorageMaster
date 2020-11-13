@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace StorageMaster
-{
+{ // base class for product children
     public abstract class Product
     {
-        private double price { get; set; }
-        private double weight { get; set; }
+        
+        private double price;
+        private double weight;
+
         public Product(double price,double weight)
         {
-            this.price = price;
-            this.weight = weight;
+            this.Price = price;
+            this.Weight = weight;
         }
+        
         public double Price
         {
-            get { return this.price; }
+            get { return this.price; } // get => this.price;
+            
+            // validating input
             set
             {
-                if(price<0)
+                
+                    if (value < 0)
                 {
-                    throw  new InvalidOperationException("Price cannot be negative");
+                    throw new InvalidOperationException("price cannot be negative!");
                 }
                 this.price = value;
+                
             }
         }
         public double Weight
